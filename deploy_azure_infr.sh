@@ -1,7 +1,7 @@
 echo "-------------------------------------------------------------------------------"
 echo "#          DESPLIEGUE DE ARQUITECTURA EN AZURE MEDIANTE TERRAFORM             -"
 echo "-------------------------------------------------------------------------------"
-cd Terraform
+cd terraform
 echo "Directorio de ejecucion de Terraform"
 echo "$(pwd)"
 echo "Terraform init"
