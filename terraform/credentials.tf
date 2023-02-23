@@ -1,10 +1,11 @@
 variable "subscription_id" {
   type = string
-  description = "Id de subcripcion"
+  description = "Id de suscripcion"
+  default = "0d29f7a5-92f2-434e-85f8-2f8f610ba718"
   #default = "XX"
 }
 
-variable "client_id" {
+/*variable "client_id" {
   type = string
   description = "Id de cliente"
   #default = "XX"
@@ -20,4 +21,4 @@ variable "tenant_id" {
   type = string
   description = "Id tenant"
   #default = "XX"
-}
+}*/
