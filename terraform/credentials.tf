@@ -16,9 +16,10 @@ variable "client_secret" {
   description = "Id clave secreta"
   #default = "XX"
 }
-
+*/
 variable "tenant_id" {
   type = string
   description = "Id tenant"
+  default = "899789dc-202f-44b4-8472-a6d40f9eb440"
   #default = "XX"
-}*/
+}
