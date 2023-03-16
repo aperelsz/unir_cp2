@@ -4,5 +4,9 @@
   remote_user: azureuser
   become: true
   tasks:
-
+      - name: Copy files from local to vm
+        ansible.builtin.copy:
+          src: ../webserver
+          dest: /usr/local/  
+          force: true  
           
