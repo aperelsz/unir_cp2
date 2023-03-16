@@ -1,0 +1,8 @@
+---
+- name: Copy files from local to vm
+  hosts: vm
+  remote_user: azureuser
+  become: true
+  tasks:
+
+          

@@ -1,22 +1,18 @@
 ---
-- name: APT_TESTING
+- name: Podman
   hosts: vm
   remote_user: azureuser
   become: true
-  tasks: 
+  tasks:
       - name: Apt - update
         ansible.builtin.apt:
           force_apt_get: true
           update_cache: yes
-      - name: Apt - download repo Podman
+      - name: Podman - downloading repository
         ansible.builtin.apt_repository:
           repo: ppa:projectatomic/ppa
-      - name: Install Podman
+      - name: Installing Podman
         ansible.builtin.apt:
           name: podman
           update_cache: yes
-          
-
-      
-
           

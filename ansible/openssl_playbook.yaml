@@ -1,0 +1,21 @@
+---
+- name: Create certificate ssl
+  hosts: vm
+  remote_user: azureuser
+  become: true
+  tasks:
+      - name: creating private key (2048)
+        community.crypto.openssl_privatekey:
+          path: /etc/ssl/private/key_unir.key
+          size: 2048
+      - name: creating certificate signing request
+        community.crypto.openssl_csr:
+          path: /etc/ssl/csr_unir.csr
+          privatekey_path: /etc/ssl/private/key_unir.key
+      - name: creating certificate using private key and signing request
+        community.crypto.x509_certificate:
+          path: /etc/ssl/crt_unir.crt
+          privatekey_path: /etc/ssl/private/key_unir.key
+          csr_path: /etc/ssl/csr_unir.csr
+          provider: selfsigned
+          
