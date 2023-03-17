@@ -1,0 +1,9 @@
+name: Podman - ACR
+  hosts: vm
+  remote_user: azureuser
+  become: true
+  tasks:
+      - name: Podman login
+        containers.podman.podman_login:
+          username: user
+          password: 'p4ssw0rd'

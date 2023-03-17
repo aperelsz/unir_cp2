@@ -9,4 +9,8 @@
           src: ../webserver
           dest: /usr/local/  
           force: true  
-          
+      - name: Copy necessary files for webserver configuration
+        ansible.builtin.copy:
+          src: /etc/apache2/     # incluye "/" al final, por lo que se copia únicamente el archivo
+          dest: /usr/local/webserver/
+          remote_src: yes

@@ -15,4 +15,30 @@
         ansible.builtin.apt:
           name: podman
           update_cache: yes
-          
+      - name: Building image
+        containers.podman.podman_image:
+          name: webserver:latest
+          path: /usr/local/webserver/
+          build:
+            format: docker
+      - name: Tag image
+        containers.podman.podman_tag:
+          image: localhost/webserver:latest
+          target_names:
+            - webserver:casopractico2
+      - name: Login to registry
+        containers.podman.podman_login:
+          username: token
+          password: 'UhYRmw7HVaIUMVEFkLw7lB0P+YK8q93837SvPfTTNy+ACRDue0Vr'
+          registry: containerregistryunir2.azurecr.io
+      - name: Push to registry
+        containers.podman.podman_image:
+          name: localhost/webserver:latest
+          push: yes
+          push_args:
+            dest: containerregistryunir2.azurecr.io
+      - name: Run container
+        containers.podman.podman_container:
+          name: casopractico2
+          image: localhost/webserver:latest
+
