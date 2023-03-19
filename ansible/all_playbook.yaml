@@ -1,0 +1,20 @@
+---
+- name: 'Run All playbooks'
+  hosts: vm
+  remote_user: azureuser
+  become: true
+  
+- import_playbook: 0_playbook.yaml        #inicial
+
+- import_playbook: 1_playbook.yaml        #Time zone
+
+- import_playbook: htpasswd_playbook.yaml
+
+- import_playbook: openssl_playbook.yaml
+
+- import_playbook: copy_files_playbook.yaml
+
+- import_playbook: podman_playbook.yaml
+
+
+

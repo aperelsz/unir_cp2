@@ -9,7 +9,3 @@
     - name: Print message
       ansible.builtin.debug:
         msg: Hello world
-    - name: Install podman
-      ansible.builtin.apt:
-        name: podman
-        state: present

@@ -21,24 +21,102 @@
           path: /usr/local/webserver/
           build:
             format: docker
-      - name: Tag image
+
+      - name: Tag image 
         containers.podman.podman_tag:
           image: localhost/webserver:latest
           target_names:
-            - webserver:casopractico2
+            - containerregistryunir2.azurecr.io/webserver:casopractico2
+
       - name: Login to registry
         containers.podman.podman_login:
-          username: token
-          password: 'UhYRmw7HVaIUMVEFkLw7lB0P+YK8q93837SvPfTTNy+ACRDue0Vr'
+          username: containerRegistryUNIR2
+          password: 'CNoN0O5hpSWRXF8oG6srlTmTjXBwwUD3cbp19FiHjq+ACRATexgR'
           registry: containerregistryunir2.azurecr.io
+      
       - name: Push to registry
         containers.podman.podman_image:
-          name: localhost/webserver:latest
+          name: containerregistryunir2.azurecr.io/webserver:casopractico2
           push: yes
           push_args:
             dest: containerregistryunir2.azurecr.io
-      - name: Run container
-        containers.podman.podman_container:
-          name: casopractico2
-          image: localhost/webserver:latest
 
+
+#      - name: Create container
+ #       containers.podman.podman_container:
+  #        name: webserver
+   #       image: containerregistryunir2.azurecr.io/webserver:casopractico2
+    #      ports: "8080:443"
+     #     state: present
+      #- name: Systemd unit files for webserver container must exist
+      #  containers.podman.podman_generate_systemd:
+      #    name: webserver
+      #    new: false
+      #    dest: /etc/systemd/system/
+      - name: Create container
+        containers.podman.podman_container:
+          name: webserver
+          image: containerregistryunir2.azurecr.io/webserver:casopractico2
+          ports: "8080:443"
+          state: present
+
+      - name: Run commands
+        ansible.builtin.command:
+          cmd: podman generate systemd --files --name webserver
+      - name: Copy file to systemd directory
+        ansible.builtin.copy:
+          remote_src: yes
+          src: ./container-webserver.service
+          dest: /etc/systemd/system/container-webserver.service
+
+      - name: Systemd_ reload daemon and enable webserver as a service.
+        ansible.builtin.systemd:
+          daemon_reload: true     
+          name: container-webserver
+          enabled: true
+          state: started
+
+      - name: Installing firewall
+        ansible.builtin.apt:
+          update_cache: yes
+          name: firewalld 
+      #- name: Expose webserver to web'
+      #  ansible.posix.firewalld:
+      #    state: enabled
+      #    port: 8080/tcp
+
+
+
+
+
+
+
+      #- name: generate_systemd
+      #  containers.podman.podman_container:
+      #    name: webserver
+      #    generate_systemd:
+      #      path: /etc/systemd/system/
+      #- name: reload daemon
+      #  ansible.builtin.systemd:
+      #    daemon_reload: true
+
+
+      #    generate_systemd:
+      #      new: true
+      #      path: /etc/systemd/system/ 
+      
+     # - name: create unit files for container
+     #   containers.podman.podman_generate_systemd:
+     #     name: webserver
+     #     dest: /etc/systemd/system/
+           
+     # - name: Webserver container must be started and enabled on systemd
+     #   ansible.builtin.systemd:
+     #       service: webserver
+     #       daemon_reload: true
+     #       state: restarted
+     #       enabled: true
+      #- name: Systemd unit files for postgres container must exist
+      #  containers.podman.podman_generate_systemd:
+      #    name: webserver
+      #    dest: ~/.config/systemd/
