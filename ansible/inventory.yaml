@@ -2,6 +2,5 @@ all:
   hosts:
   children:
     vm:
-      hosts:
-        20.108.186.3
+    localhost:
 

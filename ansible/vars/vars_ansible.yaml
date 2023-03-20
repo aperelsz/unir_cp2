@@ -1,0 +1,10 @@
+zone: 'America/Buenos_Aires'
+public_ip: '20.108.186.3'
+acr_username: 'containerRegistryUNIR2'
+acr_pass: 'hIEiCcmsHQ43bQ7LjhtRLGKEWjaaqEytMEEJfZkajU+ACRDHikCc'
+acr_name: 'containerregistryunir2.azurecr.io'
+az_username: 'alejo.perelsztein157@comunidadunir.net'
+az_pass: 'l3jo79E9Pere_'
+resource_group: 'rg-created_by_TF'
+aks_name: 'aks1'
+

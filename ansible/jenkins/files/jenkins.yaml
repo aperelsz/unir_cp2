@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins
+  namespace: jenkins-namespace
+  labels:
+    app: app_jenkins
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app_jenkins
+  template:
+    metadata:
+      labels:
+        app: app_jenkins
+    spec:
+      serviceAccount: jenkins-service-account
+      containers:
+      - name: jenkins-container
+        image: jenkins/jenkins:lts
+        ports:
+          - name: http-port
+            containerPort: 8080
+          - name: jnlp-port
+            containerPort: 50000

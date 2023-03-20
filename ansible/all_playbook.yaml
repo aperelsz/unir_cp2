@@ -1,12 +1,12 @@
 ---
 - name: 'Run All playbooks'
   hosts: vm
-  remote_user: azureuser
+  remote_user: 'azureuser'
   become: true
   
-- import_playbook: 0_playbook.yaml        #inicial
+- import_playbook: timezone_playbook.yaml        
 
-- import_playbook: 1_playbook.yaml        #Time zone
+# Neccesary playbooks for deploy webserver app in vm
 
 - import_playbook: htpasswd_playbook.yaml
 
@@ -14,7 +14,19 @@
 
 - import_playbook: copy_files_playbook.yaml
 
+- import_playbook: install_podman_playbook.yaml
+
 - import_playbook: podman_playbook.yaml
+
+# Neccesary playbooks for deploy app in kubernetes cluster
+
+- import_playbook: jenkins_docker_playbook.yaml
+
+- import_playbook: jenkins/login_az_aks_playbook.yaml
+
+- import_playbook: jenkins/kubernetes_install_playbook.yaml
+
+- import_playbook: jenkins/deploy_jenkins_playbook.yaml
 
 
 

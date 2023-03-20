@@ -1,0 +1,19 @@
+---
+- name: Podman - webserver
+  hosts: vm
+  remote_user: azureuser
+  become: true
+  vars_files:
+    - vars/vars_ansible.yaml
+  tasks:
+      - name: Apt - update
+        ansible.builtin.apt:
+          force_apt_get: true
+          update_cache: yes
+      - name: Podman - downloading repository
+        ansible.builtin.apt_repository:
+          repo: ppa:projectatomic/ppa
+      - name: Installing Podman
+        ansible.builtin.apt:
+          name: podman
+          update_cache: yes

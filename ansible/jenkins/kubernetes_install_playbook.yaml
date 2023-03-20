@@ -1,0 +1,29 @@
+---
+- name: Install pre-requisites for kube ansible module
+  hosts: vm
+  become: true
+  remote_user: 'azureuser'
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+    - name: Install pip
+      ansible.builtin.apt:
+       name: python3-pip     
+
+    - name: install pre-requisites
+      pip:
+        name:
+          - openshift
+          - pyyaml
+
+    - name: Install kubernetes python package
+      ansible.builtin.pip:
+       name: kubernetes             
+
+    - name: Kube consult nodes
+      ansible.builtin.command:
+        cmd: kubectl get nodes
+      register: result
+    - debug:
+        msg: '{{ result }}'   
+

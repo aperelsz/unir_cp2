@@ -45,14 +45,12 @@ resource "azurerm_linux_virtual_machine" "vm" {
   location            = azurerm_resource_group.rg.location
   size                = "Standard_F2"
   admin_username      = var.admin_username
-  #admin_username      = "azureuser"
   network_interface_ids = [
     azurerm_network_interface.nic.id,
   ]
 
   admin_ssh_key {
     username   = var.username
-    #username   = "azureuser"
     public_key = file("~/.ssh/id_rsa.pub")
   }
 
@@ -71,7 +69,6 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
 
 #security rules for being used by web server
-#REVISAR - ESTO ES ANTERIOR
 resource "azurerm_network_security_group" "nsg1" {
   name                = "securitygroup"
   location            = azurerm_resource_group.rg.location
@@ -88,7 +85,6 @@ resource "azurerm_network_security_group" "nsg1" {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
-#se agrega regla de puerto 80 para http y salida de webserver
 
   security_rule {
     name                       = "httpprule"
@@ -97,7 +93,7 @@ resource "azurerm_network_security_group" "nsg1" {
     access                     = "Allow"
     protocol                   = "Tcp"
     source_port_range          = "*"
-    destination_port_range     = "80"
+    destination_port_range     = "8080"
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }

@@ -1,0 +1,51 @@
+- name: Jenkins - deploy
+  hosts: vm
+  become: true
+  remote_user: 'azureuser'
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  vars_files:
+    - ../vars/vars_ansible.yaml
+  tasks:
+
+   #Create a namespace 
+    - name: Create a namespace
+      kubernetes.core.k8s:
+        name: jenkins-namespace
+        api_version: v1
+        kind: Namespace
+        state: present 
+
+    - name: Copy files from local to vm
+      ansible.builtin.copy:
+        src: ./files
+        dest: /usr/local/jenkins/
+        force: true          
+
+    - name: Create and deploy a service_account
+      command: 'kubectl apply -f /usr/local/jenkins/files/service_account.yaml'
+      register: result
+    - debug:
+        msg: "{{result}}"
+
+    - name: Create and deploy jenkins app
+      command: 'kubectl apply -f /usr/local/jenkins/files/jenkins.yaml'
+      register: result
+    - debug:
+        msg: "{{result}}"        
+
+    - name: Create and deploy service
+      command: 'kubectl apply -f /usr/local/jenkins/files/jenkins_service.yaml'
+      register: result
+    - debug:
+        msg: "{{result}}"          
+
+    - name: Create and deploy ingress
+      command: 'kubectl apply -f /usr/local/jenkins/files/ingress.yaml'
+      register: result
+    - debug:
+        msg: "{{result}}"
+
+    
+    
+    

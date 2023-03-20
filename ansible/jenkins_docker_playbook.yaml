@@ -1,0 +1,26 @@
+---
+- name: Docker - jenkins
+  hosts: vm
+  remote_user: azureuser
+  become: true
+  vars_files:
+    - vars/vars_ansible.yaml
+  tasks:
+      - name: Pull Jenkins image
+        community.docker.docker_image:
+          name: jenkins/jenkins:lts
+          state: present
+          source: pull
+
+      - name: Login to registry - docker
+        community.docker.docker_login:
+          username: "{{acr_username}}"
+          password: "{{acr_pass}}"
+          registry_url: "{{acr_name}}"
+
+      - name: Tag and Push to registry
+        community.docker.docker_image:
+          name: jenkins/jenkins:lts
+          repository: containerregistryunir2.azurecr.io/jenkins:casopractico2
+          push: true
+          source: local

@@ -1,10 +1,11 @@
 ---
 - name: 'Playbook_1 - timezone'
   hosts: vm
-  remote_user: azureuser
+  remote_user: 'azureuser'
   become: true
   vars_files:
     - vars/1_vars.yaml
+    - vars/vars_ansible.yaml
   tasks:
     - name: 'Timezone' 
       timezone:

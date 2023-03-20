@@ -1,0 +1,19 @@
+---
+- name: Login Az-Aks
+  hosts: vm
+  become: true
+  remote_user: 'azureuser'
+  vars_files:
+    - ../vars/vars_ansible.yaml
+  tasks:
+    - name: Installing AZ CLI
+      ansible.builtin.shell:
+        cmd: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+    
+    - name: Az Login
+      ansible.builtin.command:
+        cmd: az login -u {{az_username}} -p {{az_pass}}
+
+    - name: Az aks get credentials
+      ansible.builtin.command:
+        cmd: az aks get-credentials --resource-group {{resource_group}} --name {{aks_name}}

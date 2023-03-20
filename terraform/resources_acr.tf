@@ -5,7 +5,7 @@ resource "azurerm_container_registry" "acr" {
   sku                 = "Basic"
   admin_enabled       = true
   
-#indica el tipo de identidad que debe configurarse al loguearse en el servicio
+  
 identity {
     type = "SystemAssigned"
   }
