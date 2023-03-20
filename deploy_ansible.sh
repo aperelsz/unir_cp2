@@ -3,7 +3,6 @@ echo "#              DESPLIEGUE DE APPs EN AZURE MEDIANTE ANSIBLE               
 echo "            _Webserver contenerizado en Podman dentro de una VM                "
 echo "            _Jenkins en cluster de kubernetes autogestionado por Azure        -"  
 echo "-------------------------------------------------------------------------------"
-cd ..
 cd ansible
 echo "Directorio de ejecución de Ansible"
 echo "$(pwd)"
