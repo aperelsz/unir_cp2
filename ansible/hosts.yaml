@@ -1,3 +1,6 @@
 vm:
   hosts:
-    51.142.92.145
+    20.26.202.229       #Complete with output "vm_public_ip_adress" provided by Terraform
+localhost: 
+
+
